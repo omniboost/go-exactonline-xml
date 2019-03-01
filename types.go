@@ -91,7 +91,7 @@ func (ms *MatchSet) UnmarshalXML(e *xml.Decoder, start xml.StartElement) error {
 		Account struct {
 			Code string `xml:"code,attr"`
 		} `xml:"Account"`
-		MatchLines MatchLines `xml:"MatchLines>MatchLine"`
+		MatchLines MatchLines `xml:"MatchLines`
 	}{}
 
 	err := e.DecodeElement(&payload, &start)
@@ -108,14 +108,16 @@ func (ms *MatchSet) UnmarshalXML(e *xml.Decoder, start xml.StartElement) error {
 type MatchLines []MatchLine
 
 func (ll *MatchLines) UnmarshalXML(e *xml.Decoder, start xml.StartElement) error {
-	st := []MatchLine{}
+	payload := struct {
+		MatchLines []MatchLine `xml:"MatchLine"`
+	}{}
 
-	err := e.DecodeElement(&st, &start)
+	err := e.DecodeElement(&payload, &start)
 	if err != nil {
 		return err
 	}
 
-	*ll = st
+	*ll = payload.MatchLines
 	return nil
 }
 
