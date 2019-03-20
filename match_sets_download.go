@@ -143,7 +143,7 @@ func (r *MatchSetsDownloadRequest) All() ([]MatchSetsDownloadResponseBody, error
 			break
 		}
 
-		if resp.Topics[0].Count >= resp.Topics[0].PageSize {
+		if resp.Topics[0].Count < resp.Topics[0].PageSize {
 			break
 		}
 
